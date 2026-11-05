@@ -21,7 +21,7 @@ There is no model and no network: the agent is a Kotlin class inside the app, so
 
 ## Why it matters
 
-An agent that composes a screen is only useful if the app stays in control. A message can be valid for the protocol and still break the host: `List` in the Basic Catalog is a lazy list, so sending one into a screen that scrolls crashes the app with an `IllegalStateException`.
+An agent that can compose any screen can also compose one that breaks your app. This project lets the agent choose the UI while the app keeps the last word on what gets drawn.
 
 ## How it works
 
