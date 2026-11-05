@@ -22,6 +22,12 @@ private fun answer(turn: Turn): List<String> = runBlocking {
 
 private val form = answer(Turn.UserText("Prepare the next release"))
 
+/** The rows as a `List`, which the app does not offer: no agent answer asks for it, so it is written here. */
+private val refusedList =
+    """{"version": "v0.9.1", "updateComponents": {"surfaceId": "release", "components": [
+       {"id": "history_rows", "component": "List", "direction": "vertical",
+        "children": {"path": "/releases", "componentId": "release_row"}}]}}"""
+
 private val prepare =
     A2uiClientEventMessage(
         type = ReleaseAgent.PREPARE_RELEASE,
@@ -64,7 +70,7 @@ fun LabScreenPlanScreenshot() {
 fun LabScreenRefusedListScreenshot() {
     AppTheme {
         LabScreenAfter(
-            messages = answer(Turn.UserText(ReleaseAgent.LIST_REQUEST)),
+            messages = form + refusedList,
             sent =
                 listOf(
                     A2uiClientErrorMessage(

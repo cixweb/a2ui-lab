@@ -106,7 +106,7 @@ Once it is running:
 
 - Tap Ask the agent, tick Changelog reviewed and tap Prepare release: the plan appears and a row joins Recent releases
 - Type in Version name: the title of the card follows as you type
-- Tap Start over, then Ask for a List: the history card shows an error and the app keeps running
+- Tap Start over, then Ask the agent again: the form opens with the new row still in Recent releases
 
 ## Verification
 
@@ -126,6 +126,7 @@ Kotlin, Jetpack Compose and Material 3. Versions, all pinned in `gradle/libs.ver
 - The agent is simulated: no model, no network, one fixed form. It does not understand the user's words.
 - Validation errors do not reach the simulated agent. They stay in the For the agent panel, so nothing repairs a refused component.
 - The agent's memory is one list in one object: it serves one client and is lost when the app closes.
+- No button in the app asks for a refused component: a test and a screenshot send the `List` by hand.
 - The A2UI libraries are 1.0.0-alpha02 and pull in Compose 1.13 and Material 3 1.5 alphas, for the whole app.
 - The repository has no CI: the build and the tests were run on my machine, from a clean export of this commit.
 

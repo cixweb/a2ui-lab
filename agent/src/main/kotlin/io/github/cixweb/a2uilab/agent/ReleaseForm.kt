@@ -21,16 +21,16 @@ internal object ReleaseForm {
            "pattern": "^\\d+\\.\\d+\\.\\d+${'$'}"}}, "message": "Use major.minor.patch."}"""
 
     /**
-     * The form and the history, all but the rows of the history. The inputs write to the data model
-     * on the device; the button stays disabled until its `checks` pass, and its `action` sends the
+     * The screen the agent draws: the form and the history. The inputs write to the data model on
+     * the device; the button stays disabled until its `checks` pass, and its `action` sends the
      * values named in `context`. `SectionCard` is the app's own component, not one of the Basic
      * Catalog: the agent reads its properties from the contract like those of any other.
      *
-     * `release_row` is the template of [HISTORY_ROWS]. Inside a row, paths without a leading slash
-     * (`stages`) read from that item.
+     * `history_rows` draws one `release_row` for each item of `/releases`. Inside a row, paths
+     * without a leading slash (`stages`) read from that item.
      */
-    private const val FORM_AND_HISTORY =
-        """
+    const val COMPONENTS =
+        """[
           {"id": "root", "component": "Column", "align": "stretch",
            "children": ["form_card", "history_card"]},
           {"id": "form_card", "component": "SectionCard",
@@ -70,29 +70,15 @@ internal object ReleaseForm {
           {"id": "prepare_label", "component": "Text", "text": "Prepare release"},
           {"id": "history_card", "component": "SectionCard", "title": "Recent releases",
            "child": "history_rows"},
+          {"id": "history_rows", "component": "Column", "align": "stretch",
+           "children": {"path": "/releases", "componentId": "release_row"}},
           {"id": "release_row", "component": "Row", "align": "center",
            "children": ["row_release", "row_stages"]},
           {"id": "row_release", "component": "Text", "weight": 1,
            "text": {"call": "formatString", "args": {"value": "${'$'}{version} on ${'$'}{track}"}}},
           {"id": "row_stages", "component": "Text", "variant": "caption",
            "text": {"path": "stages"}}
-        """
-
-    /** One `release_row` for each item of `/releases`. */
-    private const val HISTORY_ROWS =
-        """{"id": "history_rows", "component": "Column", "align": "stretch",
-            "children": {"path": "/releases", "componentId": "release_row"}}"""
-
-    /** The same rows as a `List`, which the app does not offer: this one comes back as an error. */
-    private const val HISTORY_ROWS_IN_A_LIST =
-        """{"id": "history_rows", "component": "List", "direction": "vertical",
-            "children": {"path": "/releases", "componentId": "release_row"}}"""
-
-    /** The screen the agent draws. */
-    const val COMPONENTS = "[$FORM_AND_HISTORY, $HISTORY_ROWS]"
-
-    /** The same screen as a model could write it, with one component outside the contract. */
-    const val COMPONENTS_WITH_A_LIST = "[$FORM_AND_HISTORY, $HISTORY_ROWS_IN_A_LIST]"
+        ]"""
 
     /**
      * What the agent adds once it has a plan. `updateComponents` matches by id, so sending

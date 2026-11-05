@@ -50,20 +50,6 @@ class ReleaseAgentTest {
         assertEquals("catalog", create.getValue("catalogId").jsonPrimitive.content)
     }
 
-    @Test
-    fun onlyTheListRequestDrawsTheRowsInAList() {
-        fun rows(text: String) =
-            answer(Turn.UserText(text))[1]
-                .getValue("updateComponents").jsonObject
-                .getValue("components").jsonArray
-                .map { it.jsonObject }
-                .single { it.getValue("id").jsonPrimitive.content == "history_rows" }
-                .getValue("component").jsonPrimitive.content
-
-        assertEquals("Column", rows("prepare a release"))
-        assertEquals("List", rows(ReleaseAgent.LIST_REQUEST))
-    }
-
     private fun update(message: JsonObject) = message.getValue("updateDataModel").jsonObject
 
     private fun path(message: JsonObject) = update(message).getValue("path").jsonPrimitive.content

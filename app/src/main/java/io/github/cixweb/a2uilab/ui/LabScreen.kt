@@ -26,7 +26,6 @@ import io.github.cixweb.a2uilab.agent.ReleaseAgent
 import io.github.cixweb.a2uilab.ui.components.AppScaffold
 import io.github.cixweb.a2uilab.ui.components.CodeBlock
 import io.github.cixweb.a2uilab.ui.components.PrimaryButton
-import io.github.cixweb.a2uilab.ui.components.SecondaryButton
 import io.github.cixweb.a2uilab.ui.components.SectionCard
 
 /** The lab screen wired to its [LabViewModel]. */
@@ -48,7 +47,6 @@ fun LabRoute(modifier: Modifier = Modifier) {
         received = received,
         sent = sent,
         onAsk = { viewModel.ask(request) },
-        onAskForList = { viewModel.ask(ReleaseAgent.LIST_REQUEST) },
         modifier = modifier,
     )
 }
@@ -60,7 +58,6 @@ fun LabRoute(modifier: Modifier = Modifier) {
  * @param received the A2UI messages received so far
  * @param sent the actions and errors the app has for the agent
  * @param onAsk sends the request to the agent; offered while no surface is open
- * @param onAskForList sends the request the agent answers with a component the app does not offer
  */
 @Composable
 fun LabScreen(
@@ -68,7 +65,6 @@ fun LabScreen(
     received: List<String>,
     sent: List<A2uiClientToServerMessage>,
     onAsk: () -> Unit,
-    onAskForList: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     AppScaffold(
@@ -83,7 +79,6 @@ fun LabScreen(
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 PrimaryButton(text = stringResource(R.string.lab_ask), onClick = onAsk)
-                SecondaryButton(text = stringResource(R.string.lab_ask_list), onClick = onAskForList)
             }
         }
         surfaces.forEach { surface -> key(surface.id) { A2uiSurface(surfaceModel = surface) } }
@@ -128,5 +123,5 @@ fun LabScreenAfter(
     val surfaces = remember(messages) {
         settledSurfaces(labCatalog(A2uiBasicCatalogV1.Functions(context)), messages)
     }
-    LabScreen(surfaces = surfaces, received = messages, sent = sent, onAsk = {}, onAskForList = {})
+    LabScreen(surfaces = surfaces, received = messages, sent = sent, onAsk = {})
 }

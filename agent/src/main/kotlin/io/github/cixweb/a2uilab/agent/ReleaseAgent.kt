@@ -19,9 +19,8 @@ import kotlinx.serialization.json.put
 /**
  * A simulated agent with fixed rules and no model: it draws the release form and answers its button.
  *
- * It does not understand the user's words, so the same request always gets the same form; only
- * [LIST_REQUEST] gets another answer, to show what the app does with a component it does not offer.
- * The sample data and the rollout rule are not real.
+ * It does not understand the user's words, so any request gets the same form. The sample data and
+ * the rollout rule are not real.
  *
  * It remembers the releases it prepared, while the data model of a surface is gone as soon as the
  * surface is deleted. The memory is one list in this object, so one instance serves one client.
@@ -38,11 +37,7 @@ class ReleaseAgent(
 
     override fun respond(turn: Turn): Flow<JsonObject> = flow {
         when (turn) {
-            is Turn.UserText ->
-                sendForm(
-                    if (turn.text == LIST_REQUEST) ReleaseForm.COMPONENTS_WITH_A_LIST
-                    else ReleaseForm.COMPONENTS
-                )
+            is Turn.UserText -> sendForm()
             is Turn.Action ->
                 when (turn.name) {
                     PREPARE_RELEASE -> sendPlan(turn.context)
@@ -51,9 +46,9 @@ class ReleaseAgent(
         }
     }
 
-    private suspend fun FlowCollector<JsonObject>.sendForm(components: String) {
+    private suspend fun FlowCollector<JsonObject>.sendForm() {
         emit(A2uiMessages.createSurface(SURFACE_ID, catalogId))
-        emit(A2uiMessages.updateComponents(SURFACE_ID, components))
+        emit(A2uiMessages.updateComponents(SURFACE_ID, ReleaseForm.COMPONENTS))
         delay(pause)
         emit(A2uiMessages.updateDataModel(SURFACE_ID, ReleaseForm.formData(releases)))
     }
@@ -82,9 +77,6 @@ class ReleaseAgent(
     companion object {
         /** The id of the only surface this agent draws. */
         const val SURFACE_ID = "release"
-
-        /** The request that gets the form with a component the app does not offer. */
-        const val LIST_REQUEST = "Show the releases in a List"
 
         /** The event of the "Prepare release" button. */
         const val PREPARE_RELEASE = "prepare_release"

@@ -63,9 +63,14 @@ class AgentContractTest {
 
     @Test
     fun aComponentTheAppDoesNotOfferComesBackAsAnError() {
-        val error = outboundAfter(answer(Turn.UserText(ReleaseAgent.LIST_REQUEST))).single()
+        val create = form.first()
+        val list =
+            """{"version": "v0.9.1", "updateComponents": {"surfaceId": "release", "components": [
+               {"id": "history_rows", "component": "List", "direction": "vertical",
+                "children": {"path": "/releases", "componentId": "release_row"}}]}}"""
 
-        error as A2uiClientErrorMessage
+        val error = outboundAfter(listOf(create, list)).single() as A2uiClientErrorMessage
+
         assertEquals("VALIDATION_FAILED", error.code)
         assertEquals("Component type 'List' not found in catalog", error.message)
         assertEquals("/components/history_rows", error.context["path"])
