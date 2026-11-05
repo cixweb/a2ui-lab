@@ -1,0 +1,39 @@
+[versions]
+agp = "9.4.1"
+kotlin = "2.4.21"
+compose-bom = "2026.09.00"
+activity-compose = "1.13.0"
+lifecycle = "2.11.0"
+core-ktx = "1.19.1"
+junit = "4.13.2"
+screenshot = "0.0.1-alpha16"
+a2ui = "1.0.0-alpha02"
+gson = "2.15.0"
+kotlinx-coroutines = "1.9.0"
+kotlinx-serialization = "1.7.3"
+
+[libraries]
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
+compose-ui = { module = "androidx.compose.ui:ui" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+compose-material3 = { module = "androidx.compose.material3:material3" }
+junit = { module = "junit:junit", version.ref = "junit" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+a2ui-engine = { module = "androidx.a2ui:a2ui-engine", version.ref = "a2ui" }
+a2ui-compose-runtime = { module = "androidx.a2ui.compose:compose-runtime", version.ref = "a2ui" }
+a2ui-compose-ui = { module = "androidx.a2ui.compose:compose-ui", version.ref = "a2ui" }
+a2ui-material3 = { module = "androidx.compose.material3:material3-a2ui", version.ref = "a2ui" }
+screenshot-validation-api = { module = "com.android.tools.screenshot:screenshot-validation-api", version.ref = "screenshot" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot" }

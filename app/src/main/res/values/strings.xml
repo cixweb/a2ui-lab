@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">A2UI Lab</string>
+    <string name="app_tagline">An agent draws the release form</string>
+    <string name="lab_agent_title">Agent</string>
+    <string name="lab_agent_body">Ask for a release. The agent draws the form, you fill it in, and it answers with a rollout plan computed by code.</string>
+    <string name="lab_ask">Ask the agent</string>
+    <string name="lab_ask_list">Ask for a List</string>
+    <string name="lab_request">Prepare the next release</string>
+    <string name="lab_sent_title">For the agent</string>
+    <string name="lab_card_error">This part could not be drawn.</string>
+    <string name="lab_data_title">Data model</string>
+    <string name="lab_received_title">Messages</string>
+</resources>
