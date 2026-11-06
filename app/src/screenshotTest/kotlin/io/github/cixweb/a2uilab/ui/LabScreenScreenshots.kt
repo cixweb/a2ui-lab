@@ -34,8 +34,16 @@ private val prepare =
         surfaceId = ReleaseAgent.SURFACE_ID,
         componentId = "prepare",
         timestamp = 0,
-        context = mapOf("version" to "2.4.0", "track" to listOf("production"), "rollout" to 20),
+        context = mapOf("version" to "2.4.0", "track" to listOf("beta"), "rollout" to 20),
     )
+
+// Answered once: the agent remembers, so each new answer would add another row.
+private val plan = answer(prepare.toTurn())
+
+/** The box the user ticks before the button is enabled. */
+private val changelogReviewed =
+    """{"version": "v0.9.1", "updateDataModel": {"surfaceId": "release",
+        "path": "/changelogReviewed", "value": true}}"""
 
 @PreviewTest
 @ScreenPreviews
@@ -60,7 +68,7 @@ fun LabScreenFormScreenshot() {
 @Composable
 fun LabScreenPlanScreenshot() {
     AppTheme {
-        LabScreenAfter(messages = form + answer(prepare.toTurn()), sent = listOf(prepare))
+        LabScreenAfter(messages = form + changelogReviewed + plan, sent = listOf(prepare))
     }
 }
 
